@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PersonaController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -13,3 +14,7 @@ Route::get('/hola', function () {
         'asignatura' => 'ISC-305 Programación Web',
     ]);
 });
+
+Route::get('/personas', [PersonaController::class, 'index']);
+Route::get('/personas/{id}', [PersonaController::class, 'show'])
+ ->whereNumber('id');
