@@ -38,7 +38,7 @@ class PersonaController extends Controller
 
         return response()->json($persona, 201);
     }
-    
+
     public function update(Request $request, int $id)
     {
         $persona = Persona::findOrFail($id);
@@ -55,6 +55,14 @@ class PersonaController extends Controller
         $persona->save();
 
         return response()->json($persona, 200);
+    }
+
+    public function destroy(int $id)
+    {
+        $persona = Persona::findOrFail($id);
+        $persona->delete();
+
+        return response()->noContent();
     }
 
 
