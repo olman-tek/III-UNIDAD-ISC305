@@ -38,4 +38,28 @@ class PersonaController extends Controller
 
         return response()->json($persona, 201);
     }
+    
+    public function update(Request $request, int $id)
+    {
+        $persona = Persona::findOrFail($id);
+
+        $datos = $request->validate([
+            'dni' => ['required', 'regex:/^[0-9]{13}$/', Rule::unique('personas', 'dni')->ignore($persona)],
+            'nombre' => ['required', 'string', 'max:100'],
+            'fecha_nacimiento' => ['required', 'date', 'before_or_equal:today'],
+        ]);
+
+        $persona->dni = $datos['dni'];
+        $persona->nombre = $datos['nombre'];
+        $persona->fecha_nacimiento = $datos['fecha_nacimiento'];
+        $persona->save();
+
+        return response()->json($persona, 200);
+    }
+
+
+
+
+
+
 }
